@@ -21,13 +21,16 @@ if [ -f versions.txt ]; then
         echo "New versions available. Updating..."
 
         # Download the latest Docker images
-        while IFS= read -r line; do
-            service=$(echo $line | cut -d':' -f1)
-            version=$(echo $line | cut -d':' -f2)
-            curl -o ${service}_${version}.tar.gz ftp://$FTP_SERVER/docker_images/${service}_${version}.tar.gz --user $USERNAME:$PASSWORD
-            docker load -i ${service}_${version}.tar.gz
-            rm ${service}_${version}.tar.gz
-        done < versions_latest.txt
+        curl -o workerservice1_latest.tar.gz ftp://$FTP_SERVER/docker_images/workerservice1_latest.tar.gz --user $USERNAME:$PASSWORD
+        curl -o workerservice2_latest.tar.gz ftp://$FTP_SERVER/docker_images/workerservice2_latest.tar.gz --user $USERNAME:$PASSWORD
+
+        # Load the Docker images
+        docker load -i workerservice1_latest.tar.gz
+        docker load -i workerservice2_latest.tar.gz
+
+        # Remove the downloaded files
+        rm workerservice1_latest.tar.gz
+        rm workerservice2_latest.tar.gz
 
         # Update the local versions file
         mv versions_latest.txt versions.txt
@@ -41,19 +44,19 @@ else
     echo "Local versions file not found. Downloading the latest versions..."
 
     # Download the latest Docker images
-    while IFS= read -r line; do
-        service=$(echo $line | cut -d':' -f1)
-        version=$(echo $line | cut -d':' -f2)
-        curl -o ${service}_${version}.tar.gz ftp://$FTP_SERVER/docker_images/${service}_${version}.tar.gz --user $USERNAME:$PASSWORD
-        docker load -i ${service}_${version}.tar.gz
-        rm ${service}_${version}.tar.gz
-    done < versions_latest.txt
+    curl -o workerservice1_latest.tar.gz ftp://$FTP_SERVER/docker_images/workerservice1_latest.tar.gz --user $USERNAME:$PASSWORD
+    curl -o workerservice2_latest.tar.gz ftp://$FTP_SERVER/docker_images/workerservice2_latest.tar.gz --user $USERNAME:$PASSWORD
+
+    # Load the Docker images
+    docker load -i workerservice1_latest.tar.gz
+    docker load -i workerservice2_latest.tar.gz
+
+    # Remove the downloaded files
+    rm workerservice1_latest.tar.gz
+    rm workerservice2_latest.tar.gz
 
     # Save the latest versions file locally
     mv versions_latest.txt versions.txt
 
     echo "Initial download and update completed."
 fi
-
-# Run Docker containers
-docker-compose up
