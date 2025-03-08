@@ -1,0 +1,13 @@
+services:
+  workerservice1:
+    image: ${DOCKER_REGISTRY-}workerservice1
+    build:
+      context: .
+      dockerfile: WorkerService1/Dockerfile
+
+  workerservice2:
+    image: ${DOCKER_REGISTRY-}workerservice2
+    build:
+      context: .
+      dockerfile: WorkerService2/Dockerfile
+
