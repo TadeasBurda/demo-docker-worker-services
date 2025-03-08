@@ -21,3 +21,7 @@ docker save workerservice2:latest | gzip > workerservice2_latest.tar.gz
 # Upload to FTP server
 curl -T workerservice1_latest.tar.gz ftp://$FTP_SERVER/docker_images/ --user $USERNAME:$PASSWORD
 curl -T workerservice2_latest.tar.gz ftp://$FTP_SERVER/docker_images/ --user $USERNAME:$PASSWORD
+
+# Remove local files after upload
+rm workerservice1_latest.tar.gz
+rm workerservice2_latest.tar.gz

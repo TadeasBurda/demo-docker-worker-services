@@ -12,9 +12,16 @@ USERNAME=$2
 PASSWORD=$3
 
 # Download Docker images
-curl -o workerservice1.tar.gz ftp://$FTP_SERVER/docker_images/workerservice1.tar.gz --user $USERNAME:$PASSWORD
-curl -o workerservice2.tar.gz ftp://$FTP_SERVER/docker_images/workerservice2.tar.gz --user $USERNAME:$PASSWORD
+curl -o workerservice1_latest.tar.gz ftp://$FTP_SERVER/docker_images/workerservice1_latest.tar.gz --user $USERNAME:$PASSWORD
+curl -o workerservice2_latest.tar.gz ftp://$FTP_SERVER/docker_images/workerservice2_latest.tar.gz --user $USERNAME:$PASSWORD
 
 # Load Docker images
-docker load -i workerservice1.tar.gz
-docker load -i workerservice2.tar.gz
+docker load -i workerservice1_latest.tar.gz
+docker load -i workerservice2_latest.tar.gz
+
+# Run Docker containers
+docker-compose up
+
+# Remove local files after upload
+rm workerservice1_latest.tar.gz
+rm workerservice2_latest.tar.gz
