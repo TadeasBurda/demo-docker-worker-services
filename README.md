@@ -1,2 +1,3 @@
-# demo-docker-worker-services
-A project for two .NET worker services and Docker containers
+# Demo docker worker services
+
+This project contains two .NET worker services and Docker configurations for their deployment.
